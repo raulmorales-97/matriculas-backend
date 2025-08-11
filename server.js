@@ -153,14 +153,18 @@ async function buildMonthly(){
 app.get('/api/matriculas', async (req,res) => {
   try {
     const monthly = await buildMonthly();
-    res.json({ ok: true, source: 'combined', monthly });
+    res.json({ 
+      ok: true, 
+      source: 'combined', 
+      data: { monthly }
+    });
   } catch(err){
     res.status(500).json({ ok:false, error: err.message });
   }
 });
 
-// Simple health
+// Simple health check
 app.get('/', (req,res) => res.send('Matriculas API OK'));
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, ()=> console.log('Server listening on', PORT));
+app.listen(PORT, () => console.log('Server listening on', PORT));
